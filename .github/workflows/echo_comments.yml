@@ -1,0 +1,28 @@
+name: Echo Comments
+
+on:
+  issue_comment:
+    - types: [created]
+    
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: echo into new comment
+      id: echo
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const { owner, repo } = context.repo;
+          const issue_number = context.payload.issue.number;
+          const body = context.payload.comment.body;
+          const data = await github.rest.issues.createComment( owner, repo, issue_number, body });
+          return data.result;
+          
+        
+    - name: see results
+      shell: bash
+      run: |
+        echo ${{ steps.echo.result.output }}
+    
