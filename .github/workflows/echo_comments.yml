@@ -17,7 +17,7 @@ jobs:
           const { owner, repo } = context.repo;
           const issue_number = context.payload.issue.number;
           const body = context.payload.comment.body;
-          const data = await github.rest.issues.createComment( owner, repo, issue_number, body });
+          const data = await github.rest.issues.createComment({ owner, repo, issue_number, body });
           return data.result;
           
         
