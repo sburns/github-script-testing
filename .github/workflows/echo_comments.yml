@@ -2,7 +2,7 @@ name: Echo Comments
 
 on:
   issue_comment:
-    - types: [created]
+    types: [created]
     
 jobs:
   echo:
