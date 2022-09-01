@@ -25,8 +25,8 @@ jobs:
       id: results
       shell: bash
       run: |
-        echo "URL=$(cat ${{ steps.echo.outputs.result }} | jq -r .url)" >> $GITHUB_ENV
-        echo "HTML_URL=$(cat ${{ steps.echo.outputs.result }} | jq -r .url)" >> $GITHUB_ENV
+        echo "URL=$(echo ${{ steps.echo.outputs.result }} | jq -r .url)" >> $GITHUB_ENV
+        echo "HTML_URL=$(echo ${{ steps.echo.outputs.result }} | jq -r .url)" >> $GITHUB_ENV
         
     - name: env
       shell: bash
