@@ -15,20 +15,20 @@ jobs:
       with:
         script: |
           const { owner, repo } = context.repo;
-          const issue_number = context.payload.issue.number;
-          const body = context.payload.comment.body;
+          const { number: issue_number } = context.payload.issue;
+          const { body } = context.payload.comment;
           const result = await github.rest.issues.createComment({ owner, repo, issue_number, body });
           return result.data;
-          
         
-    - name: see results
+    - name: write results
       id: results
       shell: bash
       run: |
-        echo "URL=$(echo ${{ steps.echo.outputs.result }} | jq -r .url)" >> $GITHUB_ENV
-        echo "HTML_URL=$(echo ${{ steps.echo.outputs.result }} | jq -r .url)" >> $GITHUB_ENV
+        cat "${{ steps.echo.outputs.result }}" > result.json
+        echo "URL=$(cat result.json | jq -r .url)" >> $GITHUB_ENV
+        echo "HTML_URL=$(cat result.json | jq -r .html_url)" >> $GITHUB_ENV
         
     - name: env
       shell: bash
-      run: env
+      run: env | sort
     
